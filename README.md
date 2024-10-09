@@ -1,32 +1,37 @@
-# Web Crawler Project
+# Custom Search Engine Project
 
-This repository contains the implementation of a web crawler, which is the first step towards building a basic search engine. The crawler fetches pages from the web and follows links to discover and index more content. This project is divided into six key steps, and each step will be added progressively to this repository.
+## Overview
+This project aims to build a custom search engine from scratch. The search engine follows a structured, step-by-step approach, covering essential components such as web crawling, tokenization, normalization, indexing, and ranking. The goal is to develop a fully functional search engine to retrieve information from crawled websites efficiently.
 
-## Project Overview
+### Steps to Build the Search Engine:
+1. **Web Crawling** (Completed)
+2. **Tokenization and Normalization** (In Progress)
+3. **Indexing** (Next Step)
+4. **Ranking Algorithms**
+5. **Query Processing**
+6. **Search Engine Interface**
 
-### Goal:
-To develop a fully functional web crawler as part of a larger search engine project. The crawler will start with a set of seed URLs, fetch data from websites, and continue exploring by following hyperlinks. The data will be processed, indexed, and made searchable in future steps.
+---
 
-### Features:
-1. Crawl web pages starting from a seed URL.
-2. Extract data and follow hyperlinks for continued exploration.
-3. Keep track of visited pages to avoid re-crawling.
-4. Implement basic data cleaning and storage.
-5. Progressively build a search index (to be implemented in future steps).
+## Step 1: Web Crawling
+The first step of building the search engine involves **web crawling**, where we programmatically fetch web pages using a seed URL and extract the links to visit other web pages. The crawler has been implemented in Python using libraries like `requests` and `BeautifulSoup`. 
 
-## Project Structure
+### Key Features:
+- Respect for `robots.txt`: Ensures the crawler does not violate the site's crawling policies.
+- Token extraction from HTML: Extracts the textual content from the HTML for further processing.
 
-### Current Status:
-- **Step 1: Web Crawler** (In progress)
+---
 
-    The crawler is built using Python. The main file is `crawler.ipynb`, which contains the initial implementation of the web crawling mechanism.
+## Step 2: Tokenization and Normalization (In Progress)
+After crawling web pages, the next step is **tokenization** and **normalization**. This step processes the raw text into tokens (words) that can be used for indexing and searching.
 
-### Upcoming:
-- **Step 2: Parsing and Indexing**
-- **Step 3: Search Query Processing**
-- **Step 4: Ranking Algorithms**
-- **Step 5: UI for Search Engine**
-- **Step 6: Optimizations**
+### Tokenization:
+- Splitting the text into individual words or tokens using regular expressions.
+
+### Normalization:
+- Converting tokens to lowercase.
+- Removing stopwords (common words that do not add meaning, e.g., "the", "is").
+- Optionally applying stemming or lemmatization to reduce words to their base or root forms.
 
 ## Installation
 
@@ -35,7 +40,8 @@ To get started with this project, you can clone this repository and run the craw
 ### Requirements:
 - Python 3.x
 - Jupyter Notebook
-- Libraries: `requests`, `beautifulsoup4`
+- Libraries: `requests`, `beautifulsoup4`, `nltk`
+-- Install using: `pip install requests beautifulsoup4 nltk`
 
 ### Steps:
 
@@ -47,11 +53,7 @@ To get started with this project, you can clone this repository and run the craw
     ```bash
     cd Web-Crawler-Project
     ```
-3. Install the required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4. Open the Jupyter Notebook:
+3. Open the Jupyter Notebook:
     ```bash
     jupyter notebook crawler.ipynb
     ```
