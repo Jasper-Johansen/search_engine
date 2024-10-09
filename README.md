@@ -41,7 +41,7 @@ To get started with this project, you can clone this repository and run the craw
 - Python 3.x
 - Jupyter Notebook
 - Libraries: `requests`, `beautifulsoup4`, `nltk`
--- Install using: `pip install requests beautifulsoup4 nltk`
+   -Install using: `pip install requests beautifulsoup4 nltk`
 
 ### Steps:
 
