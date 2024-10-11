@@ -170,3 +170,7 @@ query = "Julia language"
 results = process_query(query, inverted_index)
 for url, score in results[:5]:  # Get top 5 results
     print(f"URL: {url}, Score: {score}")
+
+
+if __name__ == '__main__':
+    crawl()  # Only runs if crawler.py is executed directly
