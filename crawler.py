@@ -5,11 +5,13 @@ import time
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+import nltk
 import urllib.robotparser
 from urllib.parse import urljoin
 from collections import defaultdict
 import json
 
+# Ensure required NLTK resources are downloaded
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -27,6 +29,7 @@ def fetch_page(url):
         print(f"HTTP error occurred: {http_err}")
     except Exception as e:
         print(f"Error occurred: {e}")
+    return None  # Return None if there was an error
 
 # Function to tokenize the text content of a webpage
 def tokenize(text):
@@ -58,6 +61,14 @@ def crawl(seed_url, max_pages=10):
     to_crawl = [seed_url]
     crawled = set()
 
+    # Load existing inverted index if it exists
+    try:
+        with open("inverted_index.json", "r") as f:
+            global inverted_index
+            inverted_index = json.load(f)
+    except FileNotFoundError:
+        pass  # If the file doesn't exist, start with an empty index
+
     while to_crawl and len(crawled) < max_pages:
         url = to_crawl.pop(0)
         if url in crawled:
@@ -74,12 +85,14 @@ def crawl(seed_url, max_pages=10):
 
             # Extract and add new links to to_crawl
             links = extract_links(html_content, url)
+            # Filter out unwanted links (e.g., external links)
+            links = {link for link in links if url in link}
             to_crawl.extend(links - crawled)
             crawled.add(url)
 
         time.sleep(0.4)
 
-    # Save the inverted index to a JSON file
+    # Save the inverted index to a JSON file, appending if it already exists
     with open("inverted_index.json", "w") as f:
         json.dump(inverted_index, f)
 
@@ -96,11 +109,10 @@ def extract_links(html_content, base_url):
 
 # Function to process search queries using the pre-stored inverted index
 def process_query(query):
-    query_tokens = tokenize_and_normalize(query)
+    query_tokens = normalize(tokenize(query), use_stemming=True)
 
-    with open("inverted_index.json", "r") as f:
-        inverted_index = json.load(f)
-
+    # Load the inverted index from the JSON file once at the start
+    global inverted_index  # Use the global variable
     results = {}
     for token in query_tokens:
         if token in inverted_index:
@@ -110,4 +122,5 @@ def process_query(query):
     return sorted(results.items(), key=lambda x: x[1], reverse=True)
 
 # Example usage:
-crawl("https://jasper-johansen.github.io/julia_documentation/")
+if __name__ == "__main__":
+    crawl("https://jasper-johansen.github.io/julia_documentation/")
