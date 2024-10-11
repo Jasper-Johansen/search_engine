@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import your_crawler_module  # Import your crawler and parser functions
+import crawler  # Import your crawler and parser functions
 
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ def home():
 def search():
     if request.method == 'POST':
         query = request.form['query']
-        results = your_crawler_module.process_query(query, inverted_index)  # Adjust based on your function
+        results = crawler.process_query(query, inverted_index)  # Adjust based on your function
         return render_template('results.html', results=results)  # Render results page
     return redirect('/')  # Redirect if not POST
 
