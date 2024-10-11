@@ -10,6 +10,10 @@ from urllib.parse import urljoin
 from collections import defaultdict
 import json
 
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
+
 # Inverted index structure
 inverted_index = defaultdict(lambda: defaultdict(int))
 
